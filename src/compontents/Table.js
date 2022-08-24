@@ -60,7 +60,6 @@ function Table() {
           })
         }
       </tbody>
-
     </table>
   );
 }
