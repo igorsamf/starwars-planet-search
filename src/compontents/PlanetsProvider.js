@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import MyContex from './MyContext';
 
@@ -26,4 +27,9 @@ function PlanetsProvider({ children }) {
     </MyContex.Provider>
   );
 }
+
+PlanetsProvider.propTypes = {
+  children: PropTypes.arrayOf(Object).isRequired,
+};
+
 export default PlanetsProvider;
