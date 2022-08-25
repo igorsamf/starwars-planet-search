@@ -4,6 +4,14 @@ import MyContex from './MyContext';
 
 function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [nameFilter, setNameFilter] = useState('');
+  const [columnFilter, setColumnFilter] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
 
   const fetchApi = async () => {
     const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -21,8 +29,17 @@ function PlanetsProvider({ children }) {
     fetchApi();
   }, []);
 
+  // o que vamos comunicar
+  const context = {
+    planets,
+    nameFilter,
+    setNameFilter,
+    columnFilter,
+    setColumnFilter,
+  };
+
   return (
-    <MyContex.Provider value={ { planets } }>
+    <MyContex.Provider value={ context }>
       {children}
     </MyContex.Provider>
   );
