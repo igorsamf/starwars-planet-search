@@ -14,6 +14,21 @@ function PlanetsProvider({ children }) {
     'surface_water',
   ]);
 
+  const removeAllFilters = () => {
+    setColumnFilter([
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ]);
+    setNumericFilter([]);
+  };
+
+  const removeFilter = (index) => {
+    setNumericFilter(numericFilter.filter((FILTER, INDEX) => INDEX !== index));
+  };
+
   const fetchApi = async () => {
     const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
     const response = await fetch(url);
@@ -37,6 +52,8 @@ function PlanetsProvider({ children }) {
     setColumnFilter,
     numericFilter,
     setNumericFilter,
+    removeFilter,
+    removeAllFilters,
   };
 
   return (
