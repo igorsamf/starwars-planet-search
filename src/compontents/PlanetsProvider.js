@@ -5,6 +5,7 @@ import MyContex from './MyContext';
 function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [nameFilter, setNameFilter] = useState('');
+  const [numericFilter, setNumericFilter] = useState([]);
   const [columnFilter, setColumnFilter] = useState([
     'population',
     'orbital_period',
@@ -18,7 +19,6 @@ function PlanetsProvider({ children }) {
     const response = await fetch(url);
     const data = await response.json();
     const planetas = data.results;
-    // console.log(planetas);
     planetas.forEach((planet) => {
       delete planet.residents;
     });
@@ -29,13 +29,14 @@ function PlanetsProvider({ children }) {
     fetchApi();
   }, []);
 
-  // o que vamos comunicar
   const context = {
     planets,
     nameFilter,
     setNameFilter,
     columnFilter,
     setColumnFilter,
+    numericFilter,
+    setNumericFilter,
   };
 
   return (
@@ -46,7 +47,7 @@ function PlanetsProvider({ children }) {
 }
 
 PlanetsProvider.propTypes = {
-  children: PropTypes.arrayOf(Object).isRequired,
+  children: PropTypes.arrayOf().isRequired,
 };
 
 export default PlanetsProvider;

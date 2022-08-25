@@ -3,7 +3,33 @@ import Filters from './Filters';
 import myContext from './MyContext';
 
 function Table() {
-  const { planets, nameFilter, setNameFilter } = useContext(myContext);
+  const {
+    planets,
+    nameFilter,
+    setNameFilter,
+    numericFilter,
+  } = useContext(myContext);
+
+  // filtrando pelo name
+  const planetsFiltered = planets.filter((planet) => planet.name
+    .toLowerCase().includes(nameFilter.toLowerCase()));
+  console.log(numericFilter);
+  // filtrando pelo numeric Values
+  const planetsTotalFiltered = numericFilter
+    .reduce((ACUMULADOR, FILTER) => {
+      const { column, comparison, value } = FILTER;
+      switch (comparison) {
+      case 'maior que':
+        return ACUMULADOR
+          .filter((planet) => parseFloat(planet[column]) > parseFloat(value));
+      case 'menor que':
+        return ACUMULADOR
+          .filter((planet) => parseFloat(planet[column]) < parseFloat(value));
+      default:
+        return ACUMULADOR
+          .filter((planet) => parseFloat(planet[column]) === parseFloat(value));
+      }
+    }, planetsFiltered);
 
   return (
     <div>
@@ -40,9 +66,7 @@ function Table() {
         </thead>
         <tbody>
           {
-            planets
-              .filter((planet) => planet.name
-                .toLowerCase().includes(nameFilter.toLowerCase())) // entra no array e pega aquilo que satisfaz a condição
+            planetsTotalFiltered
               .map((planet) => {
                 const {
                   climate,
